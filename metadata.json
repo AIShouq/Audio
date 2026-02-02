@@ -1,0 +1,9 @@
+
+{
+  "name": "AudioFit Prototype",
+  "description": "A high-accessibility virtual fitness coach for visually impaired users using real-time AI pose estimation and voice guidance.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

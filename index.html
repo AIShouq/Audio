@@ -1,0 +1,233 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AudioFit</title>
+  <meta name="description" content="AudioFit مدرب رياضي افتراضي صوتي لذوي الإعاقة البصرية." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #8C1D40;
+      --secondary-color: #F7931E;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--secondary-color);
+      color: white;
+      padding: 8px;
+      z-index: 100;
+      transition: top 0.3s;
+    }
+    .skip-link:focus { top: 0; }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #5a1229 100%);
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .logo {
+      width: 140px;
+      height: auto;
+      border-radius: 24px;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .title { margin: 0; font-size: 3rem; font-weight: 800; letter-spacing: -1px; }
+    .subtitle { margin: 0; opacity: 0.9; font-size: 1.2rem; font-weight: 400; }
+
+    .status {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(5px);
+      padding: 8px 20px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: -3rem auto 4rem;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 30px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05), 0 10px 10px -5px rgba(0,0,0,0.04);
+      border-right: 8px solid var(--primary-color);
+    }
+    .card h2 {
+      color: var(--primary-color);
+      margin-top: 0;
+      font-weight: 800;
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .list { padding-right: 1.5rem; }
+    .list li { margin-bottom: 12px; font-weight: 600; color: #475569; }
+
+    .control-panel {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      padding: 1.5rem;
+      border: none;
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 1.25rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; box-shadow: none; }
+    .btn-main {
+      background: var(--secondary-color);
+      color: white;
+    }
+    .btn-main:hover:not(:disabled) { background: #e6851a; transform: scale(1.02); }
+    .btn-danger {
+      background: #ef4444;
+      color: white;
+    }
+    .btn-danger:hover { background: #dc2626; transform: scale(1.02); }
+
+    .btn:focus {
+      outline: 5px solid #cbd5e1;
+      outline-offset: 4px;
+    }
+
+    .hint {
+      margin-top: 1.5rem;
+      color: #64748b;
+      font-size: 0.95rem;
+      background: #f1f5f9;
+      padding: 15px;
+      border-radius: 12px;
+      border-right: 4px solid #cbd5e1;
+    }
+
+    .panel {
+      background: #ffffff;
+      border-radius: 24px;
+      border: 3px solid #f1f5f9;
+      margin-top: 1.5rem;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .panel-title {
+      background: #f8fafc;
+      margin: 0;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      border-bottom: 3px solid #f1f5f9;
+    }
+    .panel-body {
+      padding: 30px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      text-align: center;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+    }
+
+    .media-wrap {
+      background: #000;
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 16/9;
+      position: relative;
+      border: 4px solid #e2e8f0;
+    }
+    .media { width: 100%; height: 100%; object-fit: cover; }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+
+    @media (max-width: 600px) {
+      .header { padding: 2rem 1rem; }
+      .title { font-size: 2.2rem; }
+      .logo { width: 100px; }
+      .container { margin-top: -2rem; }
+      .card { padding: 1.5rem; }
+      .btn { padding: 1.25rem; font-size: 1.1rem; }
+    }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@^19.2.4",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "@google/genai": "https://esm.sh/@google/genai@^1.39.0"
+      }
+    }
+  </script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+  <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
